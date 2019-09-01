@@ -1,22 +1,9 @@
 import matplotlib as mpl
-# from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-import time
-import matplotlib.pyplot as plt
 import datetime as dt
 import pandas as pd
-import pandas_datareader.data as web
-from matplotlib import style
-# import stocks as st
-from datetime import timedelta
 import sample_slopes as sample_slopes
 import support_vector as support_vector
-
-# import plotly
-# plotly.offline.init_notebook_mode(connected=True)
-# import plotly.offline as py
-import ploty_web as plot_web
-
 
 plot_bool = 0
 
@@ -178,10 +165,10 @@ def main(batch_size, look_ahead):
 
     write_feature_and_targets(sv.X, sv.Y)
 
-    print sv.Y, 'Yvalues'
-    print sv.X[-1], ' Xvalues '
+    print(sv.Y, 'Yvalues')
+    print(sv.X[-1], ' Xvalues ')
     # print sv.X, 'Xvalues'
-    print 'training the model...'
+    print('training the model...')
 
     sv.train()
     # sv.run_optunity()
@@ -204,7 +191,7 @@ def iterate_over_all_batch_and_look_ahead():
                 f.write(str(float(sell[0]) / float((sell[1] + sell[0]))) + ',' +
                         str(float(buy[1]) / float(buy[1] + buy[0])) +
                         ', ' + str(i) + ',' + str(j) + '\n')
-            print i, j
+            print(i, j)
 
 if '__main__' == __name__:
 

@@ -21,11 +21,10 @@ import graphviz
 from sklearn import tree
 
 
-class Support_Vector():
+class SupportVector:
     """
     class used to handle the ML
     """
-
     def __init__(self, X, Y):
         self.X = X
         self.Y = Y
@@ -34,29 +33,24 @@ class Support_Vector():
                                  'poly': {'degree': [2, 5], 'C': [0, 5], 'coef0': [0, 2]}
                                  }
                       }
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
+            self.X, self.Y, test_size=0.2)
 
     def train_decision_tree(self):
         """
         uses the decsion tree method to try and figure out the binary classification problem
-
         """
         clf1 = DecisionTreeClassifier()
-
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
-            self.X, self.Y, test_size=0.2)
-
         clf1.fit(self.X_train, self.y_train)
-
         self.y_pred = clf1.predict(self.X_test)
-
         confustion_matrix = confusion_matrix(self.y_test, self.y_pred)
 
         print(classification_report(self.y_test, self.y_pred))
 
         #======================================== make a pretty tree START=====
-        # dot_data = tree.export_graphviz(clf1, out_file=None)
-        # graph = graphviz.Source(dot_data)
-        # graph.render("stock_surface")
+        dot_data = tree.export_graphviz(clf1, out_file=None)
+        graph = graphviz.Source(dot_data)
+        graph.render("stock_surface")
         #======================================== make a pretty tree END=======
 
     def train(self, keep=False):
@@ -68,9 +62,7 @@ class Support_Vector():
             self.X, self.Y, test_size=0.2)
 
         svclassifier = SVC()
-
         svclassifier.fit(self.X_train, self.y_train)
-
         self.y_pred = svclassifier.predict(self.X_test)
 
         confustion_matrix = confusion_matrix(self.y_test, self.y_pred)
@@ -146,17 +138,17 @@ class Support_Vector():
         print("AUROC of tuned SVM: %1.3f" % info.optimum)
 
         df = optunity.call_log2dataframe(info.call_log)
-        print df.sort_values('value', ascending=False)
+        print(df.sort_values('value', ascending=False))
+
 
 if '__main__' == __name__:
-
     X = np.array([[-1, -1], [-2, -1], [1, 1], [2, 1]])
     y = np.array([1, 1, 2, 2])
     # sv = Support_Vector(X, y)
     # sv.train()
     # sv.predict_out_put([[-0.8, -1]])
-    sv = Support_Vector(X, y)
-    print 'setting up'
+    sv = SupportVector(X, y)
+    print('setting up')
     sv.set_up_optunity()
-    print 'running...'
+    print('running...')
     sv.run_optunity()

@@ -1,14 +1,8 @@
-"""
-Author: Jason BAmford
-Date: 7/29/18
-"""
-
 from sklearn.externals import joblib
-import pandas as pd
 import numpy as np
 
 
-class BackTest():
+class BackTest:
     """
     This back testing class is used to handle the checking to see if the alorith works
 
@@ -154,13 +148,13 @@ class BackTest():
 
         self.array_of_returns = []
 
-        print array_of_bid_stream, 'array of bid stream'
+        print(array_of_bid_stream, 'array of bid stream')
 
         for bid in array_of_bid_stream:
             try:
                 bid = int(bid)
             except:
-                print "failsed here"
+                print("failsed here")
                 return self.array_of_returns
 
             if bid == 1 and holding == 0:
@@ -181,7 +175,7 @@ class BackTest():
                     sell_price = array_of_closes[
                         index + batch_size + look_ahead]
                 except:
-                    print "failsed heres"
+                    print("failsed heres")
                     return self.array_of_returns
                 # now its time to sell out and calc return
                 self.array_of_returns.append(
@@ -202,10 +196,10 @@ class BackTest():
                 holding = 0
 
             if bid == None:
-                print "the bid was  none"
+                print("the bid was  none")
                 return self.array_of_returns
 
-            print "bid: {} - buy_price: {} - sell_price: {} - holding: {}".format(str(bid), str(buy_price), str(sell_price), str(holding))
+            print("bid: {} - buy_price: {} - sell_price: {} - holding: {}".format(str(bid), str(buy_price), str(sell_price), str(holding)))
 
             # TODO should return data frame not array
             index += 1
@@ -230,9 +224,9 @@ class BackTest():
         This helper method is used to validate that the incoming bid stream has the first initial Nones equal to the batchsize + look ahead
         returns True or False
         """
-        print bid_stream, 'bid stream '
+        print(bid_stream, 'bid stream ')
         for value in bid_stream[:batch_size + look_ahead]:
-            print value
+            print(value)
             if str(value) != 'nan':
                 return False
         return True
@@ -245,7 +239,7 @@ class BackTest():
         array_of_bid_stream = self.main_df[
             column_bid_stream].tolist()[batch_size + look_ahead:]
 
-        print array_of_bid_stream, ' here is bid from fucntion'
+        print(array_of_bid_stream, ' here is bid from fucntion')
         # print len(array_of_bid_stream), 'array of bid streams in the
         # back_test.py'
 
@@ -275,10 +269,10 @@ class BackTest():
             # buy_price, ' buy price' ,sell_price , ' sell price' ,
             try:
                 bid = int(array_of_bid_stream[index])
-                print "index {} | bid {} | holding {} | close {} | buy_price {} | sell_price {}".format(str(index), str(bid), str(holding), str(array_of_closes[index]), str(buy_price), str(sell_price))
+                print("index {} | bid {} | holding {} | close {} | buy_price {} | sell_price {}".format(str(index), str(bid), str(holding), str(array_of_closes[index]), str(buy_price), str(sell_price)))
 
             except:
-                print "it failed on NONE Value"
+                print("it failed on NONE Value")
                 if holding == 1:
                     self.array_of_profits.append(
                         array_of_closes[index] - buy_price)
@@ -326,7 +320,7 @@ class BackTest():
 
                 # we dont want it to check the stock inbween the look ahead day and the day we got the sell signal
                 # were just going to hold out and append 0 until we sell
-                print 'jason here si the sell price', sell_price
+                print('jason here si the sell price', sell_price)
                 self.array_of_profits.append(sell_price - buy_price)
                 # print 'gettign to the for statment'
                 for _ in range(look_ahead - 1):
@@ -356,7 +350,7 @@ class BackTest():
                 # shift up the index bec we dont want to buy anything if we
                 # know the stock will go down in the amount of look_ahead days
                 # if index < len(array_of_bid_stream) - (look_ahead):
-                print "index was less"
+                print("index was less")
                 index = index + look_ahead - 1
 
                 self.array_of_profits.append(0)
@@ -370,7 +364,7 @@ class BackTest():
                 #     return self.array_of_profits
 
             elif bid == None:
-                print "the bid was none"
+                print("the bid was none")
 
                 if holding == 1:
                     self.array_of_profits.append(

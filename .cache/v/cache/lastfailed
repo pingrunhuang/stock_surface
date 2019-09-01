@@ -1,4 +1,0 @@
-{
-  "tests/test_Back_test.py": true, 
-  "tests/test_sample_slopes.py::test_chunks": true
-}
